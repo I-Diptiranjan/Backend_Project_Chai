@@ -5,13 +5,22 @@ import { DB_NAME } from "./constants.js";
 import DBConnect from "./db/index.js";
 
 import express from "express";
+
 const app = express();
 
 dotenv.config({
   path: "./env",
 });
 
-DBConnect();
+DBConnect()
+  .then(() => {
+    app.listen(process.env.PORT || 8080, () => {
+      console.log(`Server is running on port ${process.env.PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log("Connection error !!!");
+  });
 
 /*
 
